@@ -3,8 +3,22 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const app = express();
 const port = 3000;
+const Controller = require('./controller.js');
 
-app.use(bodyParser.urlencoded({ extended: false }));
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/movielist', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error tears'));
+db.once('open', function() {
+  console.log('leggo mongo');
+});
+
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.get('/searchArtist', (req, res) => {
@@ -36,17 +50,19 @@ app.get('/getImages', (req, res) => {
   }
   Promise.all(promises)
     .then(function (values) {
-      // console.log(values[0].data, ' this is working');
       values.forEach(value => {
         results.push(value.data);
       });
-      // console.log(results, ' results array with only data? :/');
       res.send(results);
     })
     .catch(err => {
       console.log('err @ server index @ get total promises wat ', err);
     });
 });
+
+app.get('/gallery', Controller.getData);
+
+app.post('/gallery', Controller.save);
 
 app.listen(port, () =>
   console.log(
