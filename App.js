@@ -20,6 +20,7 @@ export default class App extends React.Component {
     this.searchByArtist = this.searchByArtist.bind(this);
     this.getImages = this.getImages.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
+    this.displaySaved = this.displaySaved.bind(this);
   }
 
   handleSubmit(value) {
@@ -31,9 +32,6 @@ export default class App extends React.Component {
     await this.setState({
       currentSaved: value,
     });
-
-    console.log(value, 'value');
-    console.log(this.state.currentSaved, 'current SAVED');
     console.log('PRESSED ADDED??');
 
     axios({
@@ -43,7 +41,10 @@ export default class App extends React.Component {
         data: value,
       },
     })
-      .then(res => console.log('post client res ', res))
+      .then(res => {
+        console.log('post client res ', res)
+        this.displaySaved();
+      })
       .catch(err => console.log('error post ', err.response.data));
   }
 
@@ -75,9 +76,22 @@ export default class App extends React.Component {
       .catch(err => console.log('err client get images info', err));
   }
 
-  // componentDidMount() {
-  //   this.displaySaved();
-  // }
+  displaySaved() {
+    axios({
+      method: 'get',
+      url: 'http://localhost:3000/gallery',
+    })
+      .then(data => {
+        this.setState({ saved: data.data })
+        console.log(data.data, ' saved images data')
+        console.log(this.state.saved, 'STATE SAVED');
+      })
+      .catch(err => console.log('err client get saved info', err.response.data));
+  }
+
+  componentDidMount() {
+    this.displaySaved();
+  }
 
   render() {
     return (
