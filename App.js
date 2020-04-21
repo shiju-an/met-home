@@ -12,7 +12,7 @@ export default class App extends React.Component {
       items: [],
       // imagesURL: [],
       // title: [],
-      // artistDisplayName: '',
+      artistDisplayName: '',
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,7 +21,7 @@ export default class App extends React.Component {
   }
 
   handleSubmit(value) {
-    this.setState({items: []});
+    console.log('handle submit on app.js');
     this.searchByArtist(value);
   }
 
@@ -57,14 +57,14 @@ export default class App extends React.Component {
           // this.setState({imagesURL: [...this.state.imagesURL, dat.primaryImage]})
           // console.log(dat.title, ' image titles');
           // this.setState({title: [...this.state.title, dat.title]});        
-        });
+        })
         // this.setState({items: data.data});
         // this.setState({imagesURL: data.data.primaryImage});
         // this.setState({title: data.data.title});
         console.log(this.state.items);
         // console.log(this.state.imagesURL);
         // console.log(this.state.title);
-        // this.setState({artistDisplayName: data.data[0].artistDisplayName});
+        this.setState({artistDisplayName: data.data[0].artistDisplayName});
       })
       .catch(err => console.log('err client get images info', err));
   }
@@ -73,6 +73,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <SearchScreen handleSubmit={this.handleSubmit} />
+        <Text>HI MET LIFE WHY NO RENDER</Text>
         <ResultsScreen items={this.state.items} />
       </View>
     );
@@ -81,9 +82,12 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 50,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  image: {
+    width: 300,
+    height: 300,
   },
 });
