@@ -7,7 +7,7 @@ const Controller = require('./controller.js');
 
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/movielist', {
+mongoose.connect('mongodb://localhost/metstufflol', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -20,13 +20,21 @@ db.once('open', function() {
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept',
+  );
+  next();
+});
 
 app.get('/searchArtist', (req, res) => {
   let query = req.query.artistName;
 
   axios({
     method: 'get',
-    url: `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${query}`
+    url: `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${query}`,
   })
     .then(data => {
       res.send(data.data);

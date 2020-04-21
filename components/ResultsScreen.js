@@ -28,7 +28,7 @@ export default class ResultsScreen extends React.Component {
               item={item}
               image={item.primaryImage}
               title={item.title}
-              storageKey={this.props.storageKey}
+              handleAdd={this.props.handleAdd}
             />
           </View>
         )}
@@ -47,7 +47,7 @@ export default class ResultsScreen extends React.Component {
 const styles = StyleSheet.create({
   separator: {
     height: 1,
-    width: "100%",
+    width: '100%',
     backgroundColor: '#000',
-  }
-})
+  },
+});

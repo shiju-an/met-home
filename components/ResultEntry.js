@@ -1,5 +1,4 @@
 import React from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
 import {
   View,
   Text,
@@ -11,29 +10,24 @@ import {
 export default class ResultEntry extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      data: '',
+    };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
   }
 
-  handleSubmit() {
-    this.saveData(this.props.item);
+  handleAdd() {
+    console.log('handle add on entry, ', this.props.item);
+    this.props.handleAdd(this.props.item);
   }
 
-  saveData(value) {
-    AsyncStorage.setItem(JSON.stringify(value));
-    console.log('SAVED SAVED SAVED PLEASE ');
-  }
-
-  render() {  
+  render() {
     return (
       <View style={styles.container}>
         <Text>{this.props.title}</Text>
         <Image source={{uri: this.props.image}} style={styles.image} />
-        <Button
-          color="black"
-          title="savesavesave"
-          onPress={this.handleSubmit}
-        />
+        <Button color="black" title="savesavesave" onPress={this.handleAdd} />
       </View>
     )
   }
