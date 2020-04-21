@@ -23,14 +23,12 @@ app.use(bodyParser.json());
 
 app.get('/searchArtist', (req, res) => {
   let query = req.query.artistName;
-  console.log(query);
 
   axios({
     method: 'get',
     url: `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${query}`
   })
     .then(data => {
-      console.log(data.data, ' search artist server data');
       res.send(data.data);
     })
     .catch(err => {
@@ -39,31 +37,29 @@ app.get('/searchArtist', (req, res) => {
 });
 
 app.get('/getImages', (req, res) => {
-  // console.log(req.query.id);
   const promises = [];
-  // console.log(req.query.id.length, ' query id length')
+  const results = [];
 
   for (let i = 0; i < req.query.id.length; i++) {
     let id = req.query.id[i];
-    // console.log(id);
     let promise = axios({
       method: 'get',
       url: `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`,
-    })
-    // console.log(promise.length);
+    });
     promises.push(promise);
-      // .then(data => {
-      //   console.log(data, ' get images data on server side');
-      //   res.send(data);
-      // })
-      // .catch(err => {
-      //   console.log('err @ server index @ get object search api ', err);
-      // });
   }
   Promise.all(promises)
-    .then(function(values) {
-    console.log(values, ' this is working');
-  })
+    .then(function (values) {
+      // console.log(values[0].data, ' this is working');
+      values.forEach(value => {
+        results.push(value.data);
+      });
+      console.log(results, ' results array with only data? :/');
+      res.send(results);
+    })
+    .catch(err => {
+      console.log('err @ server index @ get total promises wat ', err);
+    });
 });
 
 app.listen(port, () =>

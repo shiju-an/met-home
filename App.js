@@ -8,7 +8,6 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imageURL: [],
       items: [],
     };
 
@@ -34,28 +33,22 @@ export default class App extends React.Component {
       method: 'get',
       url: 'http://192.168.254.19:3000/getImages',
       params: {
-        id: query
-      }
+        id: query,
+      },
     })
       .then(data => {
+        console.log('wat');
         console.log(
-          data,
+          data.data,
           'get images on client side, one per image per loop? lol',
         );
-        this.setState({testImages: data})
+        this.setState({testImages: data.data});
       })
-      .catch(err => console.log('err client get object id info', err));
+      .catch(err => console.log('err client get images info', err));
   }
 
   componentDidMount() {
-    // axios.get('http://192.168.254.19:3000/testObj')
-    //   .then(data => {
-    //     console.log(data.data.primaryImage);
-    //     this.setState({image: data.data.primaryImage});
-    //   })
-    //   .catch(err => console.log('err client get ', err));
     this.searchByArtist('Gustav Klimt');
-      // .then(this.getImages(this.state.imageURL))
   }
 
   render() {
@@ -64,7 +57,7 @@ export default class App extends React.Component {
         {/* <SearchScreen /> */}
         <Text>HI MET LIFE WHY NO RENDER</Text>
         {/* <Image source={{ uri: this.state.image }} style={styles.image} /> */}
-        <Text>TEST {this.state.imageURL[20]}</Text>
+        {/* <Text>TEST {this.state.imageURL[20]}</Text> */}
       </View>
     );
   }
