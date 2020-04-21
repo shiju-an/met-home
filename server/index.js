@@ -7,20 +7,6 @@ const port = 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// app.get('/testObj', (req, res) => {
-//   axios({
-//     method: 'get',
-//     url:
-//       'https://collectionapi.metmuseum.org/public/collection/v1/objects/45734',
-//   })
-//     .then(data => {
-//       res.send(data.data);
-//     })
-//     .catch(err => {
-//       console.log('err @ server index @ get object api spec id ', err);
-//     });
-// });
-
 app.get('/searchArtist', (req, res) => {
   let query = req.query.artistName;
 

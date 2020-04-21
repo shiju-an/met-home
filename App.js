@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import SearchScreen from './components/SearchScreen.js';
 import ResultsScreen from './components/ResultsScreen.js';
@@ -10,18 +11,18 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       items: [],
-      // imagesURL: [],
-      // title: [],
       artistDisplayName: '',
+      myKey: '',
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.searchByArtist = this.searchByArtist.bind(this);
     this.getImages = this.getImages.bind(this);
+    this.displaySaved.bind(this);
   }
 
   handleSubmit(value) {
-    console.log('handle submit on app.js');
+    this.setState({ items: [] });
     this.searchByArtist(value);
   }
 
@@ -29,10 +30,9 @@ export default class App extends React.Component {
     axios({
       method: 'get',
       url: 'http://localhost:3000/searchArtist',
-      params: {artistName: query},
+      params: { artistName: query },
     })
       .then(data => {
-        console.log(data.data.objectIDs, ' client data object ids');
         this.getImages(data.data.objectIDs);
       })
       .catch(err => console.log('err client get artist object ids ', err));
@@ -47,34 +47,33 @@ export default class App extends React.Component {
       },
     })
       .then(data => {
-        // console.log(
-        //   data.data,
-        //   'get images on client side, one per image per loop? lol',
-        // );
         data.data.forEach(dat => {
-          this.setState({items: [...this.state.items, dat]})
-          // console.log(dat.primaryImage, ' image urls');
-          // this.setState({imagesURL: [...this.state.imagesURL, dat.primaryImage]})
-          // console.log(dat.title, ' image titles');
-          // this.setState({title: [...this.state.title, dat.title]});        
+          this.setState({ items: [...this.state.items, dat] })
         })
-        // this.setState({items: data.data});
-        // this.setState({imagesURL: data.data.primaryImage});
-        // this.setState({title: data.data.title});
-        console.log(this.state.items);
-        // console.log(this.state.imagesURL);
-        // console.log(this.state.title);
-        this.setState({artistDisplayName: data.data[0].artistDisplayName});
       })
       .catch(err => console.log('err client get images info', err));
+  }
+
+  displaySaved = async () => {
+    try {
+      const keys = await AsyncStorage.getAllKeys()
+      const items = await AsyncStorage.multiGet(keys)
+      console.log(items);
+      return items;
+    } catch (error) {
+      console.log(error, ' problemo');
+    }
+  }
+
+  componentDidMount() {
+    this.displaySaved();
   }
 
   render() {
     return (
       <View style={styles.container}>
         <SearchScreen handleSubmit={this.handleSubmit} />
-        <Text>HI MET LIFE WHY NO RENDER</Text>
-        <ResultsScreen items={this.state.items} />
+        <ResultsScreen items={this.state.items} storageKey={this.state.myKey}/>
       </View>
     );
   }
@@ -85,6 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 50,
   },
   image: {
     width: 300,
