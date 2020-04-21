@@ -54,7 +54,7 @@ app.get('/getImages', (req, res) => {
       values.forEach(value => {
         results.push(value.data);
       });
-      console.log(results, ' results array with only data? :/');
+      // console.log(results, ' results array with only data? :/');
       res.send(results);
     })
     .catch(err => {

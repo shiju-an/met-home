@@ -9,6 +9,9 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       items: [],
+      imagesURL: [],
+      title: [],
+      artistDisplayName: '',
     };
 
     this.searchByArtist = this.searchByArtist.bind(this);
@@ -18,7 +21,7 @@ export default class App extends React.Component {
   searchByArtist(query) {
     axios({
       method: 'get',
-      url: 'http://192.168.254.19:3000/searchArtist',
+      url: 'http://localhost:3000/searchArtist',
       params: {artistName: query},
     })
       .then(data => {
@@ -31,18 +34,28 @@ export default class App extends React.Component {
   getImages(query) {
     axios({
       method: 'get',
-      url: 'http://192.168.254.19:3000/getImages',
+      url: 'http://localhost:3000/getImages',
       params: {
         id: query,
       },
     })
       .then(data => {
-        console.log('wat');
-        console.log(
-          data.data,
-          'get images on client side, one per image per loop? lol',
-        );
-        this.setState({testImages: data.data});
+        // console.log(
+        //   data.data,
+        //   'get images on client side, one per image per loop? lol',
+        // );
+        data.data.forEach(dat => {
+          // console.log(dat.primaryImage, ' image urls');
+          this.setState({imagesURL: [...this.state.imagesURL, dat.primaryImage]})
+          // console.log(dat.title, ' image titles');
+          this.setState({title: [...this.state.title, dat.title]});        
+        })
+        // this.setState({items: data.data});
+        // this.setState({imagesURL: data.data.primaryImage});
+        // this.setState({title: data.data.title});
+        console.log(this.state.imagesURL);
+        console.log(this.state.title);
+        this.setState({artistDisplayName: data.data[0].artistDisplayName});
       })
       .catch(err => console.log('err client get images info', err));
   }
@@ -57,7 +70,6 @@ export default class App extends React.Component {
         {/* <SearchScreen /> */}
         <Text>HI MET LIFE WHY NO RENDER</Text>
         {/* <Image source={{ uri: this.state.image }} style={styles.image} /> */}
-        {/* <Text>TEST {this.state.imageURL[20]}</Text> */}
       </View>
     );
   }
