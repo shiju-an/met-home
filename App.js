@@ -8,14 +8,25 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [],
+      // searchQuery: 'Gustav Klimt',
       imagesURL: [],
       title: [],
       artistDisplayName: '',
     };
 
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.searchByArtist = this.searchByArtist.bind(this);
     this.getImages = this.getImages.bind(this);
+  }
+
+  // handleSubmit(value) {
+  //   this.setState({searchQuery: value});
+  //   console.log(this.state.searchQuery);
+  // }
+
+  handleSubmit(value) {
+    console.log('handle submit on app.js');
+    this.searchByArtist(value);
   }
 
   searchByArtist(query) {
@@ -60,16 +71,16 @@ export default class App extends React.Component {
       .catch(err => console.log('err client get images info', err));
   }
 
-  componentDidMount() {
-    this.searchByArtist('Gustav Klimt');
-  }
+  // componentDidMount() {
+  //   this.searchByArtist(this.state.searchQuery);
+  // }
 
   render() {
     return (
       <View style={styles.container}>
-        {/* <SearchScreen /> */}
+        <SearchScreen handleSubmit={this.handleSubmit} />
         <Text>HI MET LIFE WHY NO RENDER</Text>
-        {/* <Image source={{ uri: this.state.image }} style={styles.image} /> */}
+        {/* <Image source={{uri: this.state.imageURL[0]}} style={styles.image} /> */}
       </View>
     );
   }

@@ -6,20 +6,74 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from 'react-native';
+import axios from 'axios';
 
 export default class SearchScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
+      searchQuery: '',
+      // imagesURL: [],
+      // title: [],
+      // artistDisplayName: '',
       isLoading: false,
     };
 
-    this.onSearch = this.onSearch.bind(this);
+    // this.searchByArtist = this.searchByArtist.bind(this);
+    // this.getImages = this.getImages.bind(this);
+    this.onSearchInput = this.onSearchInput.bind(this);
+    this.handleSubmitButton = this.handleSubmitButton.bind(this);
   }
 
-  onSearch(e) {
-    this.setState({value: e.nativeEvent.text});
+  // searchByArtist(query) {
+  //   console.log(query, ' search query');
+  //   axios({
+  //     method: 'get',
+  //     url: 'http://localhost:3000/searchArtist',
+  //     params: { artistName: query },
+  //   })
+  //     .then(data => {
+  //       console.log(data.data.objectIDs, ' client data object ids');
+  //       this.getImages(data.data.objectIDs);
+  //     })
+  //     .catch(err => console.log('err client get artist object ids ', err));
+  // }
+
+  // getImages(query) {
+  //   axios({
+  //     method: 'get',
+  //     url: 'http://localhost:3000/getImages',
+  //     params: {
+  //       id: query,
+  //     },
+  //   })
+  //     .then(data => {
+  //       // console.log(
+  //       //   data.data,
+  //       //   'get images on client side, one per image per loop? lol',
+  //       // );
+  //       data.data.forEach(dat => {
+  //         // console.log(dat.primaryImage, ' image urls');
+  //         this.setState({ imagesURL: [...this.state.imagesURL, dat.primaryImage] })
+  //         // console.log(dat.title, ' image titles');
+  //         this.setState({ title: [...this.state.title, dat.title] });
+  //       })
+  //       // this.setState({items: data.data});
+  //       // this.setState({imagesURL: data.data.primaryImage});
+  //       // this.setState({title: data.data.title});
+  //       console.log(this.state.imagesURL);
+  //       console.log(this.state.title);
+  //       this.setState({ artistDisplayName: data.data[0].artistDisplayName });
+  //     })
+  //     .catch(err => console.log('err client get images info', err));
+  // }
+
+  onSearchInput(e) {
+    this.setState({ searchQuery: e.nativeEvent.text });
+  }
+
+  handleSubmitButton() {
+    this.props.handleSubmit(this.state.searchQuery);
   }
 
   render() {
@@ -32,14 +86,14 @@ export default class SearchScreen extends React.Component {
         <TextInput
           style={styles.search}
           placeholder="search da met collection"
-          value={this.state.value}
-          onChange={this.onSearch}
+          // value={this.state.value}
+          onChange={this.onSearchInput}
         />
-        <Button color="black" title="gogogo" />
+        <Button color="black" title="gogogo" onPress={this.handleSubmitButton} />
         {spinny}
       </View>
     );
-  }
+  };
 }
 
 const styles = StyleSheet.create({
