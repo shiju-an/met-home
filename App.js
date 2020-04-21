@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import SearchScreen from './components/SearchScreen.js';
 import ResultsScreen from './components/ResultsScreen.js';
+import GalleryScreen from './components/GalleryScreen.js';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -82,8 +83,10 @@ export default class App extends React.Component {
       url: 'http://localhost:3000/gallery',
     })
       .then(data => {
-        this.setState({ saved: data.data })
-        console.log(data.data, ' saved images data')
+        data.data.forEach(dat => {
+          this.setState({saved: [...this.state.saved, dat.data]})
+        })
+        console.log(data.data, ' saved images data');
         console.log(this.state.saved, 'STATE SAVED');
       })
       .catch(err => console.log('err client get saved info', err.response.data));
@@ -98,6 +101,7 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <SearchScreen handleSubmit={this.handleSubmit} />
         <ResultsScreen items={this.state.items} handleAdd={this.handleAdd} />
+        <GalleryScreen items={this.state.saved} />
       </View>
     );
   }

@@ -31,4 +31,4 @@ let getData = (req, res) => {
 module.exports = {
   save,
   getData,
-}
+};
