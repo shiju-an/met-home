@@ -77,10 +77,8 @@ target 'metlol' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
-
-  pod 'ViroReact', :path => '../node_modules/react-viro/ios/'
-  pod 'ViroKit', :path => '../node_modules/react-viro/ios/dist/ViroRenderer/'
+  # pod 'ViroReact', :path => '../node_modules/react-viro/ios/'
+  # pod 'ViroKit', :path => '../node_modules/react-viro/ios/dist/ViroRenderer/'
 
   target 'metlolTests' do
     inherit! :complete

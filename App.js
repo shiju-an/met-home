@@ -2,9 +2,11 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import axios from 'axios';
 
-import SearchScreen from './components/SearchScreen.js';
-import ResultsScreen from './components/ResultsScreen.js';
-import GalleryScreen from './components/GalleryScreen.js';
+import Navigator from './routes/homeStack.js';
+
+// import SearchScreen from './components/SearchScreen.js';
+// import ResultsScreen from './components/ResultsScreen.js';
+// import GalleryScreen from './components/GalleryScreen.js';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -98,11 +100,12 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <SearchScreen handleSubmit={this.handleSubmit} />
-        <ResultsScreen items={this.state.items} handleAdd={this.handleAdd} />
-        <GalleryScreen items={this.state.saved} />
-      </View>
+      // <View style={styles.container}>
+      //   <SearchScreen handleSubmit={this.handleSubmit} />
+      //   <ResultsScreen items={this.state.items} handleAdd={this.handleAdd} />
+      //   <GalleryScreen items={this.state.saved} />
+      // </View>
+      <Navigator />
     );
   }
 }
