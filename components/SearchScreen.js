@@ -11,22 +11,25 @@ export default class SearchScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchQuery: '',
+      value: '',
       isLoading: false,
     };
 
     this.onSearchInput = this.onSearchInput.bind(this);
-    this.handleSubmitButton = this.handleSubmitButton.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   onSearchInput(e) {
-    this.setState({ searchQuery: e.nativeEvent.text });
+    this.setState({ value: e.nativeEvent.text });
   }
 
-  handleSubmitButton() {
-    this.props.handleSubmit(this.state.searchQuery);
+  handleSubmit() {
+    // this.setState({items: []});
+    // this.searchByArtist(this.state.value);
+    this.props.navigation.navigate('Results', {value: this.state.value});
   }
 
+  //not sending correct property down to child?? in child component = another method to get params? 
   render() {
     // const spinny = this.state.isLoading ? (
     //   <ActivityIndicator size="large" />
@@ -36,10 +39,10 @@ export default class SearchScreen extends React.Component {
       <View styles={styles.flowRight}>
         <TextInput
           style={styles.search}
-          placeholder="search da met collection"
+          placeholder="search da met for the artist"
           onChange={this.onSearchInput}
         />
-        <Button color="black" title="gogogo" onPress={this.handleSubmitButton} />
+        <Button color="black" title="gogogo" onPress={this.handleSubmit} />
         {/* {spinny} */}
       </View>
     );

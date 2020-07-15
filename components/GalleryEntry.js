@@ -6,7 +6,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-export default class ResultEntry extends React.Component {
+export default class GalleryEntry extends React.Component {
   constructor(props) {
     super(props);
   }

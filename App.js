@@ -13,8 +13,6 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       items: [],
-      artistDisplayName: '',
-      myKey: '',
       currentSaved: '',
       saved: [],
     };
@@ -92,6 +90,9 @@ export default class App extends React.Component {
         console.log(this.state.saved, 'STATE SAVED');
       })
       .catch(err => console.log('err client get saved info', err.response.data));
+      //let copy = this.state.saved.slice()
+      //data => {copy.push(data)}
+      //this.setState({saved: copy})
   }
 
   componentDidMount() {

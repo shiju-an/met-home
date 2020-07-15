@@ -47,7 +47,7 @@ app.get('/searchArtist', (req, res) => {
 app.get('/getImages', (req, res) => {
   const promises = [];
   const results = [];
-
+    
   for (let i = 0; i < req.query.id.length; i++) {
     let id = req.query.id[i];
     let promise = axios({
@@ -67,6 +67,10 @@ app.get('/getImages', (req, res) => {
       console.log('err @ server index @ get total promises wat ', err);
     });
 });
+
+//bluebird has promise.each --> iterates through array and waits for each async call to complete before going to next one
+//pagination 
+//instagram scroll gallery is cool hehe
 
 app.get('/gallery', Controller.getData);
 
