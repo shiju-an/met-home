@@ -48,11 +48,6 @@ export default class ResultsScreen extends React.Component {
       },
     })
       .then(
-      //   data => {
-      //   data.data.forEach(dat => {
-      //     this.setState({items: [...this.state.items, dat]});
-      //   });
-      // }
       data => {
         this.setState({items: data.data});
       })

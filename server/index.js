@@ -64,13 +64,9 @@ app.get('/getImages', (req, res) => {
       res.send(results);
     })
     .catch(err => {
-      console.log('err @ server index @ get total promises wat ', err);
+      console.log('err @ server index @ get total promises', err);
     });
 });
-
-//bluebird has promise.each --> iterates through array and waits for each async call to complete before going to next one
-//pagination 
-//instagram scroll gallery is cool hehe
 
 app.get('/gallery', Controller.getData);
 
@@ -78,6 +74,6 @@ app.post('/gallery', Controller.save);
 
 app.listen(port, () =>
   console.log(
-    `hello come in am listening @ ${port} for mobile apps?? hmm maybs`,
+    `listening @ ${port}`,
   ),
 );

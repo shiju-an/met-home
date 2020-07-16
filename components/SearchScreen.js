@@ -24,12 +24,9 @@ export default class SearchScreen extends React.Component {
   }
 
   handleSubmit() {
-    // this.setState({items: []});
-    // this.searchByArtist(this.state.value);
     this.props.navigation.navigate('Results', {value: this.state.value});
   }
 
-  //not sending correct property down to child?? in child component = another method to get params? 
   render() {
     // const spinny = this.state.isLoading ? (
     //   <ActivityIndicator size="large" />
@@ -39,10 +36,10 @@ export default class SearchScreen extends React.Component {
       <View styles={styles.flowRight}>
         <TextInput
           style={styles.search}
-          placeholder="search da met for the artist"
+          placeholder="search"
           onChange={this.onSearchInput}
         />
-        <Button color="black" title="gogogo" onPress={this.handleSubmit} />
+        <Button color="black" title="search" onPress={this.handleSubmit} />
         {/* {spinny} */}
       </View>
     );

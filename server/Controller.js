@@ -11,7 +11,7 @@ let save = (req, res) => {
       res.sendStatus(404);
     } else {
       res.sendStatus(200);
-      console.log('suuccesful!!!');
+      console.log('suuccesful!');
     }
   });
 };
@@ -22,7 +22,7 @@ let getData = (req, res) => {
       console.log('GETDATA BACKEND ERROR ', err);
       res.sendStatus(404);
     } else {
-      console.log(data, ' mongo data');
+      // console.log(data, ' mongo data');
       res.status(200).send(data);
     }
   });

@@ -27,7 +27,7 @@ export default class ResultEntry extends React.Component {
       <View style={styles.container}>
         <Text>{this.props.title}</Text>
         <Image source={{uri: this.props.image}} style={styles.image} />
-        <Button color="black" title="savesavesave" onPress={this.handleAdd} />
+        <Button color="black" title="save" onPress={this.handleAdd} />
       </View>
     )
   }

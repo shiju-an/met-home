@@ -101,11 +101,6 @@ export default class App extends React.Component {
 
   render() {
     return (
-      // <View style={styles.container}>
-      //   <SearchScreen handleSubmit={this.handleSubmit} />
-      //   <ResultsScreen items={this.state.items} handleAdd={this.handleAdd} />
-      //   <GalleryScreen items={this.state.saved} />
-      // </View>
       <Navigator />
     );
   }
